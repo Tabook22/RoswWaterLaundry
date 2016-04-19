@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+@using Microsoft.Reporting.WebForms;
+
+<style>
+#myReport{
+height:600px;
+border:1px solid #222;
+}
+#myReport2{
+height:600px;
+border:1px solid #222;
+}
+</style>
+<h2>Print Bills</h2>
+<div id="autoUpdate" style="display: none; overflow-y:auto; width:80%;" class="row">
+    <div class="col-md-4">
+     
+    <iframe id="myReport" class="embed-responsive-item"></iframe>
+
+        </div>  
+    <div class="col-md-4">
+        
+            <iframe id="myReport2" class=""></iframe>
+        
+    </div>
+    <div class="col-md-4">
+
+    </div>     
+</div>
+<script src="~/Scripts/jquery-2.2.2.min.js"></script>
+<script>
+    $(window).load(function () {
+        var bno = "@ViewBag.billno";
+       
+        var url1 = "../../Report/testReport.aspx?bno=" + bno;
+        var url2 = "../../Report/testReport2.aspx?bno=" + bno;
+        //$('#target-div').load(url1 + ' #getR1');
+       document.getElementById("myReport").src = url1 ;
+   document.getElementById("myReport2").src = url2;
+        $("#autoUpdate").show();
+
+    });
+</script>
+

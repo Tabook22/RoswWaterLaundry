@@ -1,0 +1,186 @@
+﻿@model laundry.ViewModels.AddNewBill
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Create New Bill</h2>
+<span style="font:bold;color:#222;font-size:16px;padding:5px;">
+    @DateTime.Now.ToString("MM/dd/yyyy hh:mm:tt")
+</span>
+<style>
+    .tblResult {
+        width: 600px;
+    }
+    #ulbtn {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+        #ulbtn li {
+            padding-bottom: 10px;
+        }
+
+            #ulbtn li a {
+                width: 120px;
+            }
+    .form-horizontal .control-label {
+        text-align: left;
+        padding-left: 20px;
+    }
+    #custtel {
+    }
+</style>
+@{
+    SelectList list = ViewBag.AllCust;
+}
+@*@using (Html.BeginForm())
+    {*@
+@Html.AntiForgeryToken()
+@Html.Hidden("getItmId") //to store item id
+@Html.Hidden("itmMId") // to store item main category
+@Html.Hidden("itmSId") // to store item Sub category
+<hr />
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="lnditem" style="background-color:#FFEEE4;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-8">
+                @*<div class="row">
+                        @Html.RadioButton("option", "cTel") <text>Tel. </text>
+                        @Html.RadioButton("option", "cCode")<text>Code.</text>
+                        @Html.RadioButton("option", "cName")<text>Customer Name:</text>
+                    </div>*@
+                <div class="row">
+                    <label class="control-label col-md-4">
+                        @Html.RadioButton("rdoption", "cTel") <text>Tel. </text>
+                    </label>
+                    <div class="col-md-8">
+                        <input type="text" id="custtel" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="control-label col-md-4">
+                        @Html.RadioButton("rdoption", "cCode")<text>Code.</text>
+
+                    </label>
+
+                    <div class="col-md-8">
+                        <input type="text" id="custcode" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="control-label col-md-4">
+                        @Html.RadioButton("rdoption", "cstId")<text>Customer Name:</text>
+                    </label>
+                    <div class="col-md-8">
+                        @Html.DropDownList("cstId", list, "--Select Name--", new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" style="padding-top:20px;text-align:right;">
+                        <input type="button" id="findCst" title="Find Customer" value="Find Customer" class="control-label btn btn-danger" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <div class="userimg">
+                    @*<input type="button" id="findCst" title="Find Customer" value="Find Customer" class="control-label btn btn-danger" />*@
+
+                    <div class="text-center">
+                        @*<img src="~/Content/Images/users8.png" style="width:100px;" />*@
+                        <img src="~/Content/Images/user6.png" />
+                        <br />
+                        <label id="cstname" class="control-label">
+                            ?
+                        </label>
+                        @Html.HiddenFor(model => model.CustId)
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <div class="col-md-10">
+                @{Html.RenderAction("OnDemand", "Treeview");}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="lnditem">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Qyt, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Qyt, new { @class = "form-control iptcst" })
+                            @Html.ValidationMessageFor(model => model.Qyt, "", new { @class = "text-danger" })
+                            <span id="errmsg"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control iptcst" } })
+                            @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Total(R.O)</label>
+                        <div class="col-md-8">
+                            <label id="totalCost" class="control-label"></label>
+                        </div>
+                    </div>
+                    <label id="totalCost" class="control-label col-md-4"></label>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input id="btnAddTemp" type="button" value="Add" title="Add" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <ul id="ulbtn">
+                            <li>
+                                <a href="@Url.Action("CreateNewBill", "Bills")" class="btn btn-default">Print New Bill</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-default">Send SMS</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index", "Bills")" class="btn btn-default">List of Bills</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div style="border-top:2px solid #eee;background-color:#fcf1ea;">
+
+            <div id="cstitems" style="height: 250px; overflow: scroll">
+            </div>
+            <label id="tAmount" style="display: block; text-align: right;"></label>
+        </div>
+    </div>
+</div>
+@*}*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        //this trick is used to overcome the problem of Mismatch Url from Url.Content, which reaised if used the jquery code in a separte javascript files
+        var editImgUrl= @Html.Raw(Json.Encode(Url.Content("~/Content/Images/edit.png")));
+        var deleteImgUrl= @Html.Raw(Json.Encode(Url.Content("~/Content/Images/delete.png")));
+    </script>
+    <script src="~/Scripts/addBill.js"></script>
+    <script src="~/Scripts/Treeview.js"></script>
+}

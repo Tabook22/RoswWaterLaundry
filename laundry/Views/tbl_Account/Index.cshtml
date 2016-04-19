@@ -1,0 +1,146 @@
+﻿@model IEnumerable<laundry.ViewModels.UserProfileView>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .panel {
+        padding: 5px;
+        text-align: center;
+        background-color: #fff;
+        border: solid 1px #c3c3c3;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    }
+
+    .panel {
+        padding: 50px;
+        display: none;
+        margin-top: 10px;
+    }
+
+    .btncon {
+        height: 100px;
+    }
+
+    .mydiv {
+        float: left;
+        padding-left: 10px;
+        padding-bottom: 20px;
+    }
+
+    .mydiv {
+        position: absolute;
+        margin-bottom: 10px;
+    }
+
+    #d1 {
+        left: 10px;
+    }
+
+    #d2 {
+        left: 200px;
+    }
+
+    #d3 {
+        left: 400px;
+    }
+</style>
+<h2>Index</h2>
+
+@HttpContext.Current.Session["bracch"]
+<div class="btncon" style="position:relative;">
+    @*Create new user*@
+    <div id="d1" class="mydiv">
+        @*<a href="@Url.Action("Create","tbl_Account")" class="btn btn-lg btn-success">Create New User</a>*@
+        <a id="flip3" href="#" class="btn btn-lg btn-success flip">Create New User</a>
+        <div id="panel3" class="panel">
+            <div class="form-horizontal">
+                <h4>This Form is used to add a new users accounts</h4>
+                <hr />
+                <div class="form-group">
+                    <label class="control-label col-md-2">Username:</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="username" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <lable class="control-label col-md-2">Password</lable>
+                    <div class="col-md-10">
+                        <input type="password" id="password" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">First Name:</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="FName" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Last Name:</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="LName" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">User Role:</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("Role", new List<SelectListItem>
+                                            {
+                                            new SelectListItem{Text="Admin", Value="Admin"},
+                                            new SelectListItem{Text="NormalUser", Value="NormalUser", Selected=true}
+                                            }, "--Select Role--", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Branch:</label>
+                    <div class="col-md-10">
+                        @{
+                            SelectList list = ViewBag.BrList;
+                        }
+
+                        @Html.DropDownList("Branch", list, "--Select Branch--", new { @class = "form-control" })
+                        @*@Html.DropDownListFor(model => model.Branch, ViewBag.BrList as SelectList, "--Select Branch--", new { @class = "form-control" })*@
+                        @*@Html.EditorFor(model => model.Branch, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Branch, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button id="btnAddUser" class="btn btn-default">Add User</button>
+                    </div>
+                </div>
+            </div>
+            @*@{Html.RenderAction("Create", "tbl_Account");}*@
+        </div>
+    </div>
+  
+</div>
+
+@*User List*@
+<div id="divuserlst">
+    @*@Html.Partial("_UsersList",Model)*@
+</div>
+@*@using (Ajax.BeginForm("Index", "tbl_Account", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "divuserlst" }, new { @id = "nasser" }))
+
+    {
+    <input type="hidden" id="CurrentPage" name="CurrentPage" value="@ViewBag.CurrentPage"/>
+    <input type="hidden" id="LastPage" name="LastPage" value="@ViewBag.LastPage" />
+}
+<input type="button" class="btn btn-primary" id="Previous" name="Previous" value="Previous" />
+<input type="button" class="btn btn-primary" id="Next" name="Next" value="Next" />*@
+
+
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+<script src="~/Scripts/AddUser.js"></script>

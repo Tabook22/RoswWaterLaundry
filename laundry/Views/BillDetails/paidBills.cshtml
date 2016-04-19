@@ -1,0 +1,159 @@
+﻿@model IEnumerable<laundry.ViewModels.BillViewData>
+@{
+    ViewBag.Title = "paidBills";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of paid bills</h2>
+<style>
+    .ptotal {
+        background-color: #eee;
+    }
+
+    .cost {
+    }
+</style>
+@{
+    var grid = new WebGrid(source: Model, canPage: true, rowsPerPage: 5, canSort: true, ajaxUpdateContainerId: "gird");
+    grid.Pager(WebGridPagerModes.All);
+}
+
+<div class="searchpaid" style="margin-top:20px;border-bottom:1px solid #eee;">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="txtFindDate" class="col-sm-2 control-label">Date</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="txtFindDate" placeholder="Please Select Date">
+
+            </div>
+            <div class="col-md-2">
+                <input type="button" class="form-control" value="Find Bills" id="btnFindDate">
+            </div>
+
+        </div>
+    </div>
+
+</div>
+@*@using (Html.BeginForm("DeleteSelected", "BillDetails", FormMethod.Post))
+    {*@
+@*<input type="submit" value="Delete Bills" class="btn btn-default" />*@
+<div id="grid">
+    @grid.GetHtml(htmlAttributes: new
+{
+    id = "pbills",
+    @class = "table table-bordered table-striped table-condensed"
+},
+        emptyRowCellValue: "No Records Found",
+        headerStyle: "grid-header",
+                                    //tableStyle: "table table-condense",
+                                    columns:
+                                    grid.Columns(
+                                    grid.Column(header: "", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex, style: "small"),
+                                        @*grid.Column(format: @<text><input type="checkbox" name="ids" value="@item.IsPaid" /> </text>, header: ""),*@
+                                    grid.Column("BillNo", "Bill NO."),
+                                     grid.Column("Image", header: "Customer Name", format: @<text><img src="/Content/Images/Guest.png" />@item.CustName</text>),
+                                    //grid.Column("CustName", "Customer Name"),
+                                    //grid.Column("Date", "Date"),
+                                    grid.Column("Date", "Issued on", format: (item) => string.Format("{0:dd/MM/yyyy}", item.Date)),
+                                    grid.Column("Cost", header: "cost", format: @<text>@String.Format("{0:0.00}", (decimal)(@item.Cost))</text>, style: "cost"))
+                                                                                                                                            @*grid.Column(format:@<text>@Ajax.ActionLink("Edit", "editBill", "BillDetails", new { id = @item.BillNo }, new AjaxOptions
+                                                                                                                                                {
+                                                                                                                                                    HttpMethod = "GET",
+                                                                                                                                                    UpdateTargetId = "sitesections",
+                                                                                                                                                    InsertionMode = InsertionMode.Replace
+                                                                                                                                                })</text>, header: "Edit")*@
+                                                                                                                                                                                                 )
+</div>
+@*}*@
+
+@*<div id="GridData">
+    @Html.Partial("Grid", Model)
+</div>*@
+@section scripts{
+
+    <script type="text/javascript">
+        //---------------------------------------------------------------------------------------------//
+        //Function to solve JSON date Issue
+        function ToJavaScriptDate(value) {
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results[1]));
+            return (dt.getDate() + "/"+ dt.getMonth() + 1) + "/"  + dt.getFullYear();
+        }
+
+        //--------------------------------------------------------------------------------------------//
+        //datepicker function
+        $(function () {
+            $("#txtFindDate").datepicker({ dateFormat: 'dd/mm/yy' });
+        });
+
+        //---------------------------------------------------------------------------------------------//
+        //Function Get Grand Total ad the bottom on the webgrid
+        $(document).ready(function () {
+            var total = 0;
+            $('#grid .cost').each(function () {
+                total = total + parseFloat($(this)[0].innerHTML.toLocaleString());
+            });
+            $('tbody').append('<tr class="ptotal"><td></td><td></td><td></td><td><b>Total</b></td><td><b>' + total.toFixed(2) + '</b></td></tr>');
+        });
+
+
+        //-----------------------------------------------------------------------------------------------//
+        //Fuction to list the bill according to specific date
+
+        $(document).on('click', "#btnFindDate", function () {
+            var st = $("#txtFindDate").datepicker('getDate'); //the getDate method
+            var sdate = $.datepicker.formatDate('dd/mm/yy', st);
+            // var sDate = $("#txtFindDate").datepicker({ dateFormat: 'dd/mm/yy' });
+            console.log(sdate);
+            // var sDate = $("#txtFindDate").datepicker('getDate', { dateFormat: 'dd/mm/yy' });
+            //$("#txtFindDate").datepicker({
+            //    dateFormat: 'mm/dd/yy'
+            //}).datepicker('setDate', date2)
+            url = "/BillDetails/getBillByDate?bdate=" + sdate;
+            console.log(url);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                datatype: "jsondata",
+                async: "true",
+                cache: false,
+                success: function (data) {
+                    //$('#pbills').find('thead').empty();
+                    //$('#pbills').find('tbody').empty();
+                    $("#grid").find("#pbills").remove();
+                    var tab = $('<table class="table table-bordered table-striped table-condensed" id="pbills" data-swhgajax="true" data-swhgcontainer="nasser" data-swhgcallback=""></table>');
+                    var thead = $('<thead></thead>');
+                    thead.append('<th scope="col"></th>');
+                    thead.append('<th scope="col"><a href="/BillDetails/paidBills?sort=BillNo&amp;sortdir=ASC" data-swhglnk="true">Bill NO.</a></th>');
+                    thead.append('<th scope="col"><a href="/BillDetails/paidBills?sort=CustName&amp;sortdir=ASC" data-swhglnk="true">Customer Name</a></th>');
+                    thead.append('<th scope="col"><a href="/BillDetails/paidBills?sort=Date&amp;sortdir=ASC" data-swhglnk="true">Issued on</a></th>');
+                    thead.append('<th scope="col"><a href="/BillDetails/paidBills?sort=Cost&amp;sortdir=ASC" data-swhglnk="true">cost</a></th>');
+                    tab.append(thead);
+                    $.each(data, function (i, val) {
+                        var trow = $('<tr></tr>');
+                        trow.append('<td class="small">' + (i+1) + '</td>');
+                        trow.append('<td>' + val.BillNo + '</td>');
+                        trow.append('<td><img src="/Content/Images/Guest.png" />' + val.CustName + '</td>');
+                        trow.append('<td>' + ToJavaScriptDate(val.Date) + '</td>');
+                        trow.append('<td class="cost">' + val.Cost + '</td>');
+                        tab.append(trow);
+
+                    });
+                    $("#grid").append(tab);
+
+                    //this code for getting the total cost at the bottom of the table
+                    var total = 0;
+                    $('#grid .cost').each(function () {
+                        total = total + parseFloat($(this)[0].innerHTML.toLocaleString());
+                    });
+                    $('tbody').append('<tr class="ptotal"><td></td><td></td><td></td><td><b>Total</b></td><td><b>' + total.toFixed(2) + '</b></td></tr>');
+             },
+                error: function (error) { }
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,89 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+#splashscreen{
+width:800px;
+height:700px;
+-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+/*background-color:#EDC65C;*/
+padding:20px;
+border:2px solid #00529B;
+margin-left:auto;
+margin-right:auto;
+}
+
+#splashscreen img{width:350px;}
+
+.lnditem {
+    padding:5px;border:1px solid #888; margin-bottom:20px;
+}
+.lnditem ul{margin:0;padding:0;}
+.lnditem ul li{display:inline-block;padding:10px;}
+
+.iptcst{width:80px;}
+
+.itmdrop{display:block;}
+
+
+#lcontents{
+   margin-top:80px;
+height:850px;
+-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+/*background-color:#EDC65C;*/
+padding:20px;
+border:2px solid #00529B;
+margin-left:auto;
+margin-right:auto;
+}
+
+ul#lnav{margin:0;padding:0;list-style:none;}
+ul#lnav li{padding:5px;border-bottom:1px solid #eee;}
+ul#lnav li .btn{width:100%;}
+#rcontents{
+    margin-top:80px;
+height:850px;
+-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+/*background-color:#EDC65C;*/
+padding:20px;
+border:2px solid #00529B;
+margin-left:auto;
+margin-right:auto;
+}
+
+/* ------------------------------------------------*/
+/*search styles*/
+
+.searchdata{
+background-color:#eee;
+padding:10px;
+margin-bottom:40px;
+}

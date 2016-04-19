@@ -1,0 +1,153 @@
+﻿@model laundry.ViewModels.BillViewData
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Bill Details</h2>
+<style>
+    .checkbox .btn,
+    .checkbox-inline .btn {
+        padding-left: 2.5em;
+        min-width: 3em;
+    }
+
+
+
+    .checkbox label,
+    .checkbox-inline {
+        text-align: left;
+        padding-left: 0;
+    }
+</style>
+<div class="search">
+    <h3>Please Enter Bill No.</h3>
+    @*Here am trying to find a bill and see it's status is it paid or not*@
+    <div class="form-horizontal searchdata">
+        <div class="form-group">
+            <label for="exampleInputName2" class="col-sm-2 control-label">Bill No.</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="billNo" placeholder="Bill No.">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="btnFindBills" type="button" class="btn btn-default">Find</button>
+            </div>
+        </div>
+    </div>
+    @*---------------------------------------------------------------------------*@
+    @*The folowing form will show the result of search for the bill and then we can choose if this bill is paid or not*@
+    <div class="status">
+        <p>
+            @ViewBag.Status
+        </p>
+    </div>
+    @using (Html.BeginForm("addBillNo", "BillDetails", FormMethod.Post))
+    {
+        <div id="billDetails">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="txtbillno" class="col-sm-2 control-label">Bill No.</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.BillNo, htmlAttributes: new { @class = "form-control" , @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="CustName" class="col-sm-2 control-label">Customer Name</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.CustName, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Date" class="col-sm-2 control-label">Bill Date</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.Date, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Cost" class="col-sm-2 control-label">Total Amount(R.O)</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(model => model.Cost, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtDate" class="col-sm-2 control-label">Is Paid</label>
+                    <div class="col-sm-10">
+                        <div class="checkbox-inline">
+                            <label class="btn btn-default">
+                                @Html.CheckBoxFor(model => model.IsPaid, new { @class = "", @checked = "checked" })
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Save Bill</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@section scripts{
+    <script type="text/javascript">
+        //this function is used to solve the JSON date issue
+        function ToJavaScriptDate(value) {
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results[1]));
+            return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+        }
+        $(function () {
+            $('#IsPaid').prop('checked', false);
+            var role = "User";
+            $(document).on('click', "#btnFindBills", function () {
+                var billNo = $("#billNo").val();
+                console.log(billNo);
+                url = "/BillDetails/getBill?BNO=" + billNo;
+                console.log(url);
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: "{}",
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "jsondata",
+                    async: "true",
+                    cache: false,
+                    success: function (data) {
+                        $.each(data, function (index, value) {
+                            $("#BillNo").val(value.BillNo);
+                            $("#CustName").val(value.CustName);
+                            $("#Date").val(ToJavaScriptDate(value.Date));
+                            $("#Cost").val(value.Cost);
+                            if (value.IsPaid) {
+                                if (role == "Admin")
+                                {
+                                    $('#IsPaid').prop('checked', true);
+                                } else
+                                {
+                                    $('#IsPaid').prop('checked', true).attr("disabled", true);
+                                }
+                                
+                            } else {
+                                $("#IsPaid").prop('checked', false);
+                            }
+
+                        });
+                        //$(".status").addClass("statusstyle");
+                        //$("#statusMsg").html(data.message);
+                        //$("#divUserListContainer").load(UrlGetAll);
+                        //$("#divUserListContainer").load("@(Url.Action("getVList", "agrVillages"))");
+                    },
+                    error: function (error) { }
+                });
+            });
+        });
+    </script>
+
+}
+

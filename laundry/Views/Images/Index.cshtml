@@ -1,0 +1,31 @@
+﻿@model IEnumerable<laundry.Models.DB.tbl_images>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@{
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 10);
+    grid.Pager(WebGridPagerModes.NextPrevious);
+}
+<div id="mPstContent">
+    @grid.GetHtml(
+        tableStyle: "table table-responsive",
+    columns: grid.Columns(
+                        grid.Column(header: "NO.", format: @<text><div>@(item.WebGrid.Rows.IndexOf(item) + 1)</div></text>),
+                        grid.Column(header: "Item Image", format: @<text><img src='@item.imgL' class="pstImg" alt="@item.imgL" title="YourText" style="width:32px;height:32px;"> </text>),
+                        grid.Column(header: "Item Image Url", format: (item) => Html.Raw("<span>" + item.imgL + "</span>")),
+                        grid.Column("", style: "button", format: @<text>
+                            <a href='@Url.Action("Edit","Items",new{id=item.Id})'>
+                                <img src="~/Content/Images/edit.png" style="width:2rem;" />
+                            </a>|
+                            <a href='@Url.Action("Details","Items",new{id=item.Id})'>
+                                <img src="~/Content/Images/list.png" style="width:2rem;" />
+                            </a>|
+                            <a href='@Url.Action("DeleteConfirmed","Items",new{id=item.Id})' , onclick="return confirm('Are you sure you wish to delete this article?');">
+                                <img src="~/Content/Images/delete.png" style="width:2rem;" />
+                            </a>
+                        </text>)
+                           )
+                     )
+</div>

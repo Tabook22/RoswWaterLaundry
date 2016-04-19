@@ -1,0 +1,27 @@
+﻿@model IEnumerable<laundry.Models.DB.Bill>
+@{
+    ViewBag.Title = "State Area";
+}
+<h2>State Area - Report</h2>
+
+<table>
+    <tr>
+        <th> State ID</th>
+        <th>State Name</th>
+        <th>Area(KM)</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.TransId)</td>
+            <td>@Html.DisplayFor(modelItem => item.CustId)</td>
+            <td>@Html.DisplayFor(modelItem => item.ItemId)</td>
+        </tr>
+    }
+</table>
+<div style="padding:10px; border:1px solid black">
+    <div><a href="@Url.Action("Report",new {id= "PDF"})"> Get Report PDF</a></div>
+    <div><a href="@Url.Action("Report",new {id= "Excel"})"> Get Report Excel</a></div>
+    <div><a href="@Url.Action("Report",new {id= "Word"})"> Get Report Word</a></div>
+    <div><a href="@Url.Action("Report",new {id= "Image"})"> Get Report Image</a></div>
+</div>

@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@using Microsoft.Reporting.WebForms;
+<h2>Our Customer List</h2>
+<div id="autoUpdate" style="display: none; overflow-y: auto" class="SlideContainer">
+    <table width="100%" height="100%">
+        <tr>
+        <td><iframe id="myReport" width="350px" height="600px"></iframe></td>
+        <td><iframe id="myReport2" width="350px" height="600px"></iframe></td>
+        </tr>
+    </table>
+</div>  
+<script src="~/Scripts/jquery-2.2.2.min.js"></script>
+<script>
+    $(window).load(function () {
+
+        document.getElementById("myReport").src = "../../Report/testReport.aspx";
+     // document.getElementById("myReport2").src = "../../Report/testReport2.aspx";
+        $("#autoUpdate").show();
+
+    });
+</script>
+

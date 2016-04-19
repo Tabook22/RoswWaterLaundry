@@ -1,0 +1,40 @@
+﻿@model IEnumerable<laundry.ViewModels.UserProfileView>
+
+<table class="tblUserLst table table-responsive" id=tblResult>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Username</th>
+            <th>Firt Name</th>
+            <th>Last Name</th>
+            <th> Role</th>
+            <th>Branch</th>                          
+            <th></th>
+    </thead>
+    <tbody>
+        @{ int i = 0;}
+        @foreach (var usr in Model)
+        {
+            i = i + 1;
+            if (Model.Count() > 0)
+            {
+                <tr>
+                    <td style="background-color:#eee;">@i</td>
+                    <td>@usr.Username</td>
+                    <td>@usr.FName</td>
+                    <td>@usr.LName</td>
+                    <td>@usr.Role</td>
+                    <td>@usr.Branch</td>
+                    <td>
+                        <a id="hlkdel" href="#" data-delid="@usr.AID">
+                            <img src="/Content/Images/delete.png" title="Delete record." style="width:16px;" />
+                        </a>
+                    </td>
+                </tr>
+
+            }
+
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<laundry.Models.DB.Customer>
+
+@{
+    Page.Title = "Export To PDF";
+    var grid = new WebGrid(Model, ajaxUpdateContainerId: "grid");
+}
+<h2>Export to PDF</h2>
+
+<div id="gridContainer">
+    <div id="grid">
+        @grid.GetHtml(
+            tableStyle: "table",
+            alternatingRowStyle: "alternate",
+            headerStyle: "header",
+            columns: grid.Columns(
+                grid.Column("CustId", "ID"),
+                grid.Column("CustName", "Customer Name"),
+                grid.Column("Tel", "Tel")
+            //grid.Column("Address"),
+            //grid.Column("City"),
+            //grid.Column("Country"),
+            //grid.Column("Phone")
+            )
+        )
+        <img src="~/Content/Images/pdf-icon.png" id="pdf" alt="Export to PDF" title="Export to PDF" />
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+    $(function () {
+        $('#pdf').appendTo($('tfoot tr td')).on('hover', function () {
+            $(this).css('cursor', 'pointer');
+        });
+        $('#pdf').on('click', function () {
+            $('<iframe src="/GeneratePdf"></iframe>').appendTo('body').hide();
+        });
+    });
+    </script>
+}
+<a href="@Url.Action("printPDF","Print")">Print PDF</a>

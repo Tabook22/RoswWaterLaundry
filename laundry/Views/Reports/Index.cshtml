@@ -1,0 +1,27 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-2.2.2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Print').click(function () {
+                window.open("../Reports/PrintFile");
+ 
+            });
+        });
+    </script>
+</head>
+<body>
+    <div> 
+        <input type="button" id="Print" value="Print" />
+    </div>
+</body>
+</html>

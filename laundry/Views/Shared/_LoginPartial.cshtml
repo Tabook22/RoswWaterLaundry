@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNet.Identity
+@using laundry.Security
+@*@if (Request.IsAuthenticated)*@
+@if (string.IsNullOrEmpty(SessionPersister.Username))
+{
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Index", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+else
+{
+
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li style="color:#999999;">
+                @Html.ActionLink(@SessionPersister.BranchName + " ("+ @SessionPersister.BranchID + ") " , "Index", "tbl_Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li>
+                @Html.ActionLink("Hello " + @SessionPersister.Username + "!", "Index", "tbl_Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+    @*<ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Index", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>*@
+}
+

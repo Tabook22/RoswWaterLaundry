@@ -1,0 +1,128 @@
+﻿@model List<laundry.Models.DB.ItemMainCategory>
+@{
+    Layout = "";
+}
+@* Here We will add some css for looks treeview good *@
+
+<style>
+    .itemlst{
+        width:200px;
+        height:500px;
+        overflow-y:scroll;
+    }
+    .loadingP {
+        background-image: url('../../Content/Images/generated-image.gif');
+        width: 15px;
+        display: inline-block;
+    }
+
+    .itmcollapse {
+        width: 15px;
+        background-image: url('../../Content/Images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -36px -17px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+     .subItmcollapse {
+        width: 15px;
+        background-image: url('../../Content/Images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -36px -17px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+     .subCatcollapse {
+        width: 15px;
+        background-image: url('../../Content/Images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -36px -17px;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .expand {
+        width: 15px;
+        background-image: url('../../Content/Images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -50px -17px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .treeview ul {
+        font: 14px Arial, Sans-Serif;
+        margin: 0px;
+        padding-left: 20px;
+        list-style: none;
+    }
+
+    .treeview > li > a {
+        font-weight: bold;
+    }
+
+    .treeview li a {
+        padding: 4px;
+        font-size: 12px;
+        display: inline-block;
+        text-decoration: none;
+        width: auto;
+    }
+    #itmImg{width:30px;}
+    .mCategory{
+        margin:0px !important;
+        padding:0px !important;
+    }
+    .mCategory >li{
+        color:#000;
+        font-weight:bold;
+        padding:5px;
+        border-bottom:1px solid #000;
+    }
+     .mCategory >li> ul> li{
+        padding:5px;
+          border-left:1px solid #d9534f;   
+    }
+        .mCategory > li > ul > li:last-child {
+            border-bottom:none;
+        }
+      .mCategory >li> ul> li> ul >li{
+          border-left:1px solid #d9534f;
+          padding:0px;
+          margin-bottom:10px;
+      }
+</style>
+
+<div class="itemlst" style="border:1px solid black; padding:0px;  background-color:#FAFAFA">
+    @{
+        <div class="treeview">
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    @*Here I will going to load Treeview menus*@
+                    <ul class="mCategory">
+                        @foreach (var i in Model)
+                        {
+                            <li>
+                                <span class="itmcollapse collapsible" data-loaded="false" pid="@i.Id">&nbsp;</span>
+                                @* Here I have added the above span for collapsible button for treeview *@
+                                @* and data-loaded="false" means its sub menu not loaded yet from database *@
+                                <span>
+                                    @i.catName
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                }
+            }
+        </div>
+    }
+</div>
+@* Here I am going to add js code for populate submenu for the selected tree node
+    @section Scripts{
+
+    <script src="~/Scripts/Treeview.js"></script>
+    }
+
+*@

@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = "";
+}
+@using laundry.Security
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Success</title>
+</head>
+<body>
+   <div>
+       Welecom @SessionPersister.Username
+       <br/>
+       @ViewBag.BranchName
+       @SessionPersister.BranchID 
+       <br/>
+       <a href='@Url.Action("Logout","Account")'>Logout</a>
+   </div>
+</body>
+</html>

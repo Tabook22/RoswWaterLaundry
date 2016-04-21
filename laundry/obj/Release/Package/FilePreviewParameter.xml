@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="altersanah.com" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Nasser\\Desktop\\MyGitHup\\RoswWaterLaundry\\laundry\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Nasser\\Desktop\\MyGitHup\\RoswWaterLaundry\\laundry\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="Add write permission to App_Data Folder" description="Add write permission to App_Data folder" value="altersanah.com/App_Data" tags="Hidden">
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Nasser\\Desktop\\MyGitHup\\RoswWaterLaundry\\laundry\\obj\\Release\\Package\\PackageTmp\\App_Data$" />
+  </parameter>
+  <parameter name="altersanahConnection-Web.config Connection String" description="" value="Data Source=ivy.arvixe.com;Initial Catalog=myDB;User ID=tabook;Password=Arv@allmona_22" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Nasser\\Desktop\\MyGitHup\\RoswWaterLaundry\\laundry\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='altersanahConnection']/@connectionString" />
+  </parameter>
+</parameters>

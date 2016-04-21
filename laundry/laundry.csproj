@@ -510,6 +510,7 @@
     <Content Include="RPTDataSet\DataSet1.xsc">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\altersanah.com - Web Deploy.pubxml" />
     <None Include="RPTDataSet\DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -703,12 +704,12 @@
     <Content Include="Scripts\tinymce\tinymce.min.js" />
     <Content Include="Scripts\Treeview.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Web_old.config" />
+    <Content Include="Web_old.Debug.config">
+      <DependentUpon>Web_old.config</DependentUpon>
     </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Web_old.Release.config">
+      <DependentUpon>Web_old.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -813,6 +814,13 @@
     <Content Include="Views\ReportTV\getReport.cshtml" />
     <Content Include="Views\Bills\billReport.cshtml" />
     <Content Include="Views\Shared\_LayoutPrint.cshtml" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documents\PDFDocuments\" />

@@ -12,7 +12,7 @@ namespace laundry.Report
 {
     public partial class TestReport : System.Web.UI.Page
     {
-        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString());
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["altersanahConnection"].ToString());
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)

@@ -9,7 +9,7 @@ namespace laundry.Models.DB
     public partial class LundryDbContext : DbContext
     {
         public LundryDbContext()
-            : base("name=DefaultConnection")
+            : base("name=altersanahConnection")
         {
         }
         public virtual DbSet<Bill> Bills { get; set; }

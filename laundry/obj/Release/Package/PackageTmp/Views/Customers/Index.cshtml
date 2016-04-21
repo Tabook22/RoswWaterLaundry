@@ -1,0 +1,53 @@
+﻿@model IEnumerable<laundry.Models.DB.Customer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Users List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+        <th>Codel No.</th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            <img src="~/Content/Images/Guest.png" /></td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CustId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CustId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CustId })
+        </td>
+    </tr>
+}
+
+</table>

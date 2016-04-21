@@ -1,0 +1,35 @@
+﻿@model laundry.Models.DB.tbl_Account_role
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_Account_role</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.account.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.account.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.role.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.role.RoleName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

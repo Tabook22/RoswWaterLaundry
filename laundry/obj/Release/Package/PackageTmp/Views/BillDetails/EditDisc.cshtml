@@ -1,0 +1,121 @@
+﻿@model laundry.Models.Disc
+
+@{
+    ViewBag.Title = "EditDisc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lundary Discount</h2>
+<style>
+    .imgdisc {
+        position: absolute;
+        width: 100px;
+        left: 50rem;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="font-weight:bold;padding:5px;border:1px solid #eee;border-radius:2px;background-color:seashell;">
+        <h4>Please Add The Discount Amount</h4>
+        <hr />
+        <img src="~/Content/Images/disc.png" class="imgdisc" />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            <lable class="control-label col-md-2">Discount Date:</lable>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DisDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DisDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <lable class="control-label col-md-2">Discount Amount (%):</lable>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DisAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DisAmount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <lable class="control-label col-md-2">All Branches:</lable>
+            <div class="col-md-10" style="padding:5px;border:1px solid #222;border-radius:2px;width:3rem;">
+                @Html.CheckBoxFor(model => model.Allbra)
+            </div>
+        </div>
+        <div class="form-group">
+            <lable class="control-label col-md-2">Branches</lable>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Branche, new SelectList(ViewBag.Branches, "value", "text"),"--Select Branch--")
+                @*@Html.DropDownListFor(model=>model.Branche, ViewBag.Branches as SelectList, "Select ...",new { @class = "myClass", style = "width: 250px;" })*@
+                @*@Html.EditorFor(model => model.Branche, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Branche, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="form-group">
+            <lable class="control-label col-md-2">Is Active:</lable>
+            <div class="col-md-10" style="padding:5px;border:1px solid #222;border-radius:2px;width:3rem;">
+                @Html.CheckBoxFor(model => model.status)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                @{
+                    if (ViewBag.ErrorMessage != null)
+
+                    {
+                        <p style="color:red;font-weight:bold;">
+                            @ViewBag.ErrorMessage
+                        </p>
+
+                    }
+                    else
+                    {
+                        <p>
+
+                        </p>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+                    }
+
+<div>
+    @Html.ActionLink("Back to List", "DiscList")
+</div>
+
+@section scripts{
+
+
+    <script type="text/javascript">
+        //datepicker function
+        $(function () {
+            $("#DisDate").datepicker();
+        });
+        
+        $(function () {
+            //check to see if the Allbra is previously checked
+            if ($("#Allbra").is(":checked")) {
+                $("#Branche").prop("disabled", true);
+            } else {
+                $("#Branche").prop("disabled", false);
+            }
+
+            // if Allbra changed
+                $("#Allbra").click(function () {
+                    if ($(this).is(":checked")) {
+                        $("#Branche").prop("disabled", true);
+                    } else {
+                        $("#Branche").prop("disabled", false);
+                    }
+                });
+        });
+    </script>
+
+
+}

@@ -1,0 +1,78 @@
+﻿@model laundry.Models.DB.tbl_images
+<link href="~/Content/dropzone.css" rel="stylesheet" />
+@using (Html.BeginForm("BatchUpload", "Images", FormMethod.Post, new { @class = "dropzone", enctype = "multipart/form-data" }))
+{
+    @Html.Hidden("hidAlbumId")
+    
+}
+<div>
+    <!--  upload button  ，  provide multiple pictures one-time upload function  -->
+    <button type="submit" id="submit-all" disabled ="disabled">  upload  </button>
+</div>
+    
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/dropzone.js"></script>
+<script>
+        //Dropzone  properties and events  ，myDropzone   form   id
+        Dropzone.options.myDropzone = {
+
+            //  specified picture upload path
+            url: "@Url.Action("BatchUpload", "Images")",
+
+            //  add upload cancelled and delete picture preview link  ，  default does not add
+            addRemoveLinks: true,
+
+            //  close automatically upload function ， Default will  true  will file up to automatically upload
+            //  also is to add a piece of picture to the server to send a request
+            autoProcessQueue: false,
+
+            //  allows to upload multiple photos for each
+            uploadMultiple: true,
+
+            //  upload  ，  tested default pit  2，  ah
+            //  remember to modify  web.config   limit the upload file size of section
+            parallelUploads: 100,
+
+            init: function () {
+                var submitButton = document.querySelector("#submit-all")
+                myDropzone = this; // closure
+
+                //  upload button to add the click event
+                submitButton.addEventListener("click", function () {
+                    //  manually pass all the pictures
+                    myDropzone.processQueue();
+                });
+
+                //  when add a picture after the event ， The upload button restore the available
+                this.on("addedfile", function () {
+                    $("#submit-all").removeAttr("disabled");
+                });
+
+                //  when accept event  ，  finished uploading the data to  JSON  format
+                this.on("complete", function (data) {
+                    if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                        var res = eval('(' + data.xhr.responseText + ')');
+                        var msg;
+                        if (res.Result) {
+                            msg = "  congratulations  ，  successfully upload  " + res.Count + "  photo  ！";
+                        }
+                        else {
+                            msg = "  upload failed failed  ，   ：" + res.Message;
+                        }
+                        $("#message").text(msg);
+                        $("#dialog").dialog("open");
+                    }
+                });
+
+                //  delete pictures from the event  ，  when upload pictures for space-time  ，  the upload button is not available state
+                this.on("removedfile", function () {
+                    if (this.getAcceptedFiles().length === 0) {
+                        $("#submit-all").attr("disabled", true);
+                    }
+                });
+            }
+        };
+</script>

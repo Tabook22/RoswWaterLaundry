@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <META Http-Equiv="Cache-Control" Content="no-cache" />
+    <META Http-Equiv="Pragma" Content="no-cache" />
+    <META Http-Equiv="Expires" Content="0" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Content/site.css">
+    <link rel="stylesheet" href="/Content/report.css">
+    <link rel="stylesheet" href="/Content/font-awesome.css">
+@Scripts.Render("~/bundles/modernizr")
+<link rel="stylesheet" href="/Content/jquery ui/jquery-ui.css">
+    <style>
+        .addcustbg {
+            background-image: url('../../Content/Images/Guest.png');
+            background-repeat: no-repeat;
+        }
+
+        .additembg {
+            background-image: url('../../Content/Images/item.gif');
+            background-repeat: no-repeat;
+        }
+
+        .addbillbg {
+            background-image: url('../../Content/Images/icon-bill2.png');
+            background-repeat: no-repeat;
+        }
+
+        .addpaidbillbg {
+            background-image: url('../../Content/Images/billpaid2.png');
+            background-repeat: no-repeat;
+        }
+
+        .addbilldetailsbg {
+            background-image: url('../../Content/Images/billDetails.png');
+            background-repeat: no-repeat;
+        }
+
+        .addDisc {
+            background-image: url('../../Content/Images/disc2.png');
+            background-repeat: no-repeat;
+        }
+
+        body {
+            background-image: url('../../Content/Images/dg2.png');
+        }
+        </style>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @*@<ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>*@
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+
+        <div class="row">
+            <div class="col-md-3">
+                <div id="lcontents" class="form-horizontal">
+                    <img src="~/Content/Images/icons-zoom.png" class="img-circle img-responsive" />
+                    @*<ul id="lnav">
+                        <li><a href="@Url.Action("Create", "Customers")" class="btn btn-default">Add New Customers</a></li>
+                        <li><a href="@Url.Action("Create", "Items")" class="btn btn-default">Add New Items</a></li>
+                        <li><a href="@Url.Action("Create", "Bills")" class="btn btn-default">New Bills</a></li>
+                        <li><a href="@Url.Action("Index", "BillDetails")" class="btn btn-default">Bill Details</a></li>
+                        <li><a href="@Url.Action("Index", "Reports")" class="btn btn-default">Laundry Reports</a></li>
+                        <li><a href="@Url.Action("Register","Account")" class="btn btn-default">Users</a></li>
+                        <li><a href="@Url.Action("Create","Branches")" class="btn btn-default">Add Branche</a></li>
+
+                    </ul>*@
+                    <ul id="lnav">
+                        <li><a class="btn btn-default addcustbg" href="/Customers/Create">Add New Customers</a></li>
+                        <li><a class="btn btn-default addbillbg" href="/Bills/Create">New Bills</a></li>
+                        <li><a class="btn btn-default addbilldetailsbg" href="/BillDetails">Bill Details</a></li>
+                        <li><a class="btn btn-default addpaidbillbg" href="/BillDetails/paidBills">Paid Bills</a></li>
+                        <li><a class="btn btn-default " href="/BillDetails/nonPaidBills">Bill Details</a></li>
+                        <li><a class="btn btn-default" href="/Reports">Laundry Reports</a></li>
+                        <li><a class="btn btn-default" href="/tbl_Account/Index">Add Users</a></li>
+                        <li><a class="btn btn-default" href="/Branches/Create">Add Branche</a></li>
+                        <li><a class="btn btn-default" href="/Images/Create">Add Iamges</a></li>
+                        <li><a class="btn btn-default" href="/ItemMainCategories/Create">Add Main Category</a></li>
+                        <li><a class="btn btn-default" href="/ItemSubCategories/Create">Add Sub Category</a></li>
+                        <li><a class="btn btn-default additembg" href="/Items/Create">Add New Items</a></li>
+                        <li><a class="btn btn-default addDisc" href="/BillDetails/AddDisc">Add Discount</a></li>
+                        <li><a class="btn btn-default addDisc" href="/UserAccount/SignUp">Add Users</a></li>
+
+                    </ul>
+                    </div>
+                </div>
+            <div class="col-md-9">
+                <div id="rcontents" class="form-horizontal">
+                    @RenderBody()
+                    </div>
+                </div>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+  
+<script src="/Scripts/respond.js"></script>
+    <script src="/Content/jquery ui/jquery-ui.js"></script>
+    <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript"></script>
+    @*<script src="/Scripts/Treeview.js"></script>*@
+  @RenderSection("scripts", required: false)
+       
+</body>
+</html>

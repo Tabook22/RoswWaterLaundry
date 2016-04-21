@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Laundry Home Page";
+    Layout = "~/Views/Shared/_LayoutIntroduction.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div id="splashscreen" class="col-md-12">
+            <img src="~/Content/Images/logo.png" />
+            <div style="width: 300px; margin-left: auto; margin-right: auto;">
+                <img src="~/Content/Images/icons-zoom.png" style="width: 300px;" />
+            </div>
+            <div>
+                <a href="@Url.Action("Create","Bills")" Class="btn btn-primary" style="width: 200px;" >Enter </a>
+            </div>
+        </div>
+        </div> 
+</div>

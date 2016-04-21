@@ -1,0 +1,58 @@
+﻿@model IEnumerable<laundry.Models.Disc >
+
+@{
+    ViewBag.Title = "DiscList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DiscList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddDisc")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Date
+        </th>
+        <th>
+           Disc (%)
+        </th>
+        <th>
+           Branche No.
+        </th>
+        <th>
+          All Disc
+        </th>
+        <th>
+           Is Active
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Branche)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Allbra)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditDisc", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

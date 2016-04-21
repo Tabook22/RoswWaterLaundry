@@ -1,0 +1,44 @@
+﻿@*@model IEnumerable<laundry.ViewModels.billsDetails>*@
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>Report</h2>
+<style>
+    .price {
+        
+    }
+</style>
+
+<div class="" >
+    <div>
+
+    </div>
+    <div id="myGridRpt">
+        @{
+            var myGrid = new WebGrid(Model, canPage: true, rowsPerPage: 10);
+            myGrid.Pager(WebGridPagerModes.NextPrevious);
+            @myGrid.GetHtml(tableStyle: "table table-bordered lstheader", htmlAttributes: "header",
+        alternatingRowStyle: "alt",
+        columns: myGrid.Columns(
+        myGrid.Column(header: "", format: @<text><div>@(item.WebGrid.Rows.IndexOf(item) + 1)</div></text>, style: "small"),
+        //myGrid.Column(header: "Date", style: "larger", format: (item) => Html.Raw("<a href=" + ">" + item.Date + "</a>")),
+        myGrid.Column(header: "Customers", style: "larger", format: (item) => Html.Raw("<b>" + item.CustomerName + "</b>")),
+         myGrid.Column(header: "Amount", format: @<text>@String.Format("{0:0.00}", (decimal)(@item.Amount))</text>, style: "price")
+        ));
+
+
+        }
+    </div>
+</div>
+@section Scripts {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var total = 0;
+                $('#myGridRpt .price').each(function () {
+                    total = total + parseFloat($(this)[0].innerHTML.toLocaleString());
+                });
+                $('tbody').append('<tr style="background-color:#eee;"><td></td><td><b></b></td><td style="text-align:left;"><b>' + "Total= " + total.toFixed(2) +"(R.O)"+ '</b></td></tr>');
+            });
+        </script>
+   }

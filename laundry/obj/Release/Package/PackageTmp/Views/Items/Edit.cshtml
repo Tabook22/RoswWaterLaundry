@@ -1,0 +1,246 @@
+﻿@model laundry.ViewModels.ItemViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .additem {
+        background-color: antiquewhite;
+        border: 1px solid #808080;
+        border-radius: 5px;
+    }
+
+    .itmImg {
+        margin-top: 5rem;
+        background-color: #fff;
+        border: 1px solid #eee;
+        padding: 3px;
+        width: 25rem;
+        max-height:30rem;
+    }
+</style>
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="additem">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(x => x.ItemId)
+                    <div class="form-group">
+                        <lable class="control-label col-md-3">Main Category:</lable>
+                       
+                        <div class="col-md-9">
+                            @Html.DropDownList("MId", null, "--Please Select Main Category--", htmlAttributes: new { @class = "form-control" })
+                           
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <lable class="control-label col-md-3">Sub Category:</lable>
+                        <div class="col-md-9">
+                            @*@Html.DropDownListFor(x => x.SId, new SelectList(ViewBag.SId, "Value", "Text"))*@
+                            @Html.DropDownListFor(x => x.SId, Enumerable.Empty<SelectListItem>(), "--Please Select SubCategory--", htmlAttributes: new { @class = "form-control" })
+                            @*@Html.DropDownList("SId", null, htmlAttributes: new { @class = "form-control" })*@
+                        
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.SId, "SId", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("StudentGender",
+                                    new SelectList(Enum.GetValues(typeof(subCat))),
+                                    "Select Gender",
+                                    new { @class = "form-control" })
+
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ItemName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ItemName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.itemImg, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.itemImg, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.itemImg, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-3">
+                                <!-- Button trigger modal -->
+                                <button id="btnImgLst" class="btn btn-primary btn-sm" title="Share this content" data-toggle="modal" data-target="#myModal">
+                                    <i class="fa fa-share-alt"></i> Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <lable class="control-label col-md-3">Price (R.O):</lable>
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <lable class="control-label col-md-3">Description:</lable>
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save Changes" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <img src="" class="img-responsive itmImg" />
+
+            </div>
+        </div>
+
+    </div>
+}
+<div class="row">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:silver">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-share-alt"></i>Itme Image List</h4>
+                </div>
+                <div class="modal-body" style="height:40rem;overflow-y:scroll;">
+                    <div id="ItemImgList">
+
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color:silver">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+   var sid=@ViewBag.SId;
+      // get the sub category when the page opened
+            var selectedMainCateogry = $("#MId").val();
+                $.getJSON('@Url.Action("getSubCategory","Items")', { mcat: selectedMainCateogry }, function (subCategory) {
+                    var subSelect = $('#SId');
+                    subSelect.empty();
+                   $('#SId').append('<option>--Please Select SubCategory--</option>');
+                    $.each(subCategory, function (index, scat) {
+
+                        subSelect.append($('<option/>', {
+                            value: scat.Id,
+                            text: scat.catName
+                        }));
+                    });
+                    $("#SId option").filter(function() {
+                        //may want to use $.trim in here
+                        return $(this).val() == sid;
+                    }).prop('selected', true);
+                });
+
+        //this will make sure do display the right sub category
+    // alert(sid);
+        //$("#SId option").filter(function() {
+        //    //may want to use $.trim in here
+        //    return $(this).val() == sid;
+        //}).prop('selected', true);
+
+        //-- on main category change
+        $('#MId').change(function () {
+            var selectedMainCateogry = $(this).val();
+            if (selectedMainCateogry != null && selectedMainCateogry != '') {
+                $.getJSON('@Url.Action("getSubCategory","Items")', { mcat: selectedMainCateogry }, function (subCategory) {
+                    var subSelect = $('#SId');
+                    subSelect.empty();
+                    $('#SId').append('<option>--Please Select SubCategory--</option>');
+                    $.each(subCategory, function (index, scat) {
+
+                        subSelect.append($('<option/>', {
+                            value: scat.Id,
+                            text: scat.catName
+                        }));
+                    });
+
+                });
+
+            }
+        })
+
+        //$('#MId').change(function () {
+        //   var getImg= $('#itemImg').val();
+        //   $(".itmimg").attr("src", getImg);
+        //});
+    </script>
+    <script type="text/javascript">
+       $(function () {
+           var getimg=$("#itemImg").val();
+           $(".itmImg").attr("src", getimg);
+
+           $("#itemImg").on("change", function () {
+               var getimg = $("#itemImg").val();
+               $(".itmImg").attr("src", getimg);
+           });
+       });
+    </script>
+
+<script>
+        $(function () {
+            $("#btnImgLst").on("click", function () {
+                $.ajax({
+                    url: "/Images/getItmImages",
+                    type: "GET",
+                    data: "{}",
+                    dataType: "json",
+                    success: function (data) {
+                        var output = $("#ItemImgList");
+                        output.empty();
+                        for (var i = 0; i < data.getImgLst.length ; i++) {
+                            var imglst = data.getImgLst[i];
+                                output.append("<table id=" + "ilst" + " class=" + "table" + ">" +
+                                "<tr class=" + "hdr" + ">" +
+                                "<th>Item Image</th>" +
+                                "<th>Item Image</th>" +
+                                "</tr>" +
+                                "<tr>" +
+                                "<td>"+imglst +  "</td>" +
+                                "<td><img class='selItmLst' src=" + imglst+ " /></td>" +
+                                "</tr></table>");
+                        }
+                    },
+                    error: function () {
+                        alert("Error!");
+                    }
+                });
+            });
+        });
+</script>
+}

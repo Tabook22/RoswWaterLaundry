@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="altersanahConnection-Web.config Connection String" description="altersanahConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=ivy.arvixe.com;Initial Catalog=myDB;User ID=tabook;Password=Arv@allmona_22" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Nasser\\Desktop\\MyGitHup\\RoswWaterLaundry\\laundry\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='altersanahConnection']/@connectionString" />
+  </parameter>
+</parameters>

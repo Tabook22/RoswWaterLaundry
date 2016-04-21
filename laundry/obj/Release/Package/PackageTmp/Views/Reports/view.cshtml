@@ -1,0 +1,124 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>view</title>
+    <script src="~/Scripts/jquery-2.2.2.min.js"></script>
+    <script>
+        $(document).on('click', '.PrintPDF', function (e) {
+            var win = window.open('../Reports/billReport?billno=(01)00168', '_blank');
+            console.log('click');
+            if (win) {
+                win.focus();
+            } else {
+                alert('Please allow popups for this site');
+            }
+            win = window.contentWindow ? window.contentWindow : window.contentDocument.document ? window.contentDocument.document : window.contentDocument;
+            win.print();
+        });
+    </script>
+
+    <script type="text/javascript">
+function Print() {
+    var dvReport = document.getElementById("dvReport");
+    var frame1 = dvReport.getElementsByTagName("iframe")[0];
+    if (navigator.appName.indexOf("Internet Explorer") != -1) {
+        frame1.name = frame1.id;
+        window.frames[frame1.id].focus();
+        window.frames[frame1.id].print();
+    }
+    else {
+        var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+        frameDoc.print();
+    }
+}
+    </script>
+
+</head>
+<body>
+    <p>
+        check this address:<br/>
+        https://nithuan.wordpress.com/2013/03/29/automaticaly-printing-rdlc-in-asp-net-mvc-3/
+    </p>
+    <div> 
+        @{
+
+            ViewBag.Title = "Employee Report Sample";
+
+        }
+
+        <h2>Employee Report Sample</h2>
+
+        @if (ViewBag.ErrMessage != null)
+
+        {
+
+            ViewBag.ErrMessage = "Report not found";
+
+        }
+
+        <div>
+            <input id="btnreportmvc" type="button" value="Print Invoice"
+                   class="btn btn-info PrintPDF" style="margin-right: 10px;" />
+            @Html.ActionLink("Click to Get Report1", "DepartmentwiseInwardOutwardReport", "Reports", new { billno = "(01)00168"}, new { @class = "PrintPDF" })
+            @Html.ActionLink("Click to Get Report2", "billReport", "Reports", new { billno = "(01)00169" }, new { @class = "PrintPDF" })
+            @Html.ActionLink("open report on screen", "GetPdf", "Reports", new { fileNam = "nasser7.pdf" }, new { @class = "someclass" })
+
+        </div>
+
+      
+
+        <div id="dvReport">
+            <iframe id="frmPrint" name="IframeName" width="500" height="200" >
+             
+                    بسم الله الرحمن الرحيم
+               
+            </iframe>
+        </div>
+        <br />
+        <input type="button" id="btnPrint" value="Print" onclick="Print()" />
+
+    </div>
+    <!--Open PDF inside Iframe-->
+    <hr />
+    <input id="btnIframe" type="button" value="Iframe" />
+    <input id="btnNewTab" type="button" value="New Tab" />
+
+    <div id="pdfDiv"></div>
+
+    <script type="text/javascript">
+  $(function () {
+
+    $("#btnIframe").click(function () {
+      var filename = "nasser12";
+      var startPage = 1;
+      var endPage = 3;
+
+      var pParams = filename + "¬" + startPage + "¬" + endPage;
+      var url = '/Reports/GetPdfPages/' + pParams;
+      var html = "<iframe src=" + url + " style='width: 600px; height: 400px' ></iframe>";
+
+      $('#pdfDiv').html(html);
+    });
+
+    $("#btnNewTab").click(function () {
+        var filename = "nasser12";
+      var startPage = 1;
+      var endPage = 3;
+
+      var pParams = filename + "¬" + startPage + "¬" + endPage;
+      var url = '/Reports/GetPdfPages/' + pParams;
+
+      window.open(url, "_blank");
+    });
+
+  });
+    </script>
+</body>
+</html>

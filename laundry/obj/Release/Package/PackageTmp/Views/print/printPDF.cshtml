@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewBag.Title = "printPDF";
+}
+
+<h2>printPDF</h2>
+
+<a href="@Url.Action("printMyPDF","Print",new{pdfName=@ViewBag.myPDF})">Print PDF</a>

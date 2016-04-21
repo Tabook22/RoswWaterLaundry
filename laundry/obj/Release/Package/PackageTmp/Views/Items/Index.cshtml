@@ -1,0 +1,45 @@
+﻿@model IEnumerable<laundry.ViewModels.ItemViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+@{
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 10);
+    grid.Pager(WebGridPagerModes.NextPrevious);
+}
+<div id="mPstContent">
+    @grid.GetHtml(
+        tableStyle: "table table-responsive",
+    columns: grid.Columns(
+                        grid.Column(header: "NO.", format: @<text><div>@(item.WebGrid.Rows.IndexOf(item) + 1)</div></text>),
+                        //grid.Column(header: "رقم المقالة", format: (item) => Html.Raw("<span class='getId'>" + item.ItemId+ "</span>")),
+                        grid.Column(header: "Item Name", format: (item) => Html.Raw("<span>" + item.ItemName + "</span>")),
+                        grid.Column(header: "Item Image", format: @<text><img src='@item.itemImg' class="pstImg" alt="@item.ItemName" title="YourText" style="width:32px;height:32px;"> </text>),
+                        grid.Column(header: "Main Category", format: (item) => Html.Raw("<span>" + item.MId + "</span>")),
+                        grid.Column(header: "Sub Category", format: (item) => Html.Raw("<span>" + item.SId + "</span>")),
+                        grid.Column(header: "Price", format: (item) => Html.Raw("<span>" + item.Price + "</span>")),
+                        grid.Column("", style: "button",format: @<text>
+                                        <a href='@Url.Action("Edit","Items",new{id=item.ItemId})'>
+                                            <img src="~/Content/Images/edit.png" style="width:2rem;" />
+                                        </a>|
+                                        <a href='@Url.Action("Details","Items",new{id=item.ItemId})'>
+                                            <img src="~/Content/Images/list.png" style="width:2rem;" />
+                                        </a>|
+                                        <a href='@Url.Action("DeleteConfirmed","Items",new{id=item.ItemId})' , onclick="return confirm('Are you sure you wish to delete this article?');">
+                                            <img src="~/Content/Images/delete.png" style="width:2rem;" />
+                                        </a>
+                                        </text>)
+                           )
+                     )
+</div>
+
+

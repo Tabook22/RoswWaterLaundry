@@ -25,6 +25,7 @@ namespace laundry
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/jquery ui/jquery-ui.css",
                       "~/Content/site.css"));
         }
     }

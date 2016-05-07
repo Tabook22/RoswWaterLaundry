@@ -20,7 +20,7 @@
             <iframe id="frmPrint" name="IframeName"
                  runat="server"
                 style="display: none"></iframe>
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="PrintPDF" />
         </div>
     </form>
 </body>

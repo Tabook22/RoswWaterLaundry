@@ -27,8 +27,8 @@
                             $ul.append(
                                     $("<li></li>").append(
                               
-                                        "<span class='subItmcollapse subCollapsible' data-loaded='false' pid='" + ele.Id + "'>&nbsp;</span>"+
-                                        "<span>"+ele.catName +"</span>" 
+                                        "<span class='subItmcollapse subCollapsible' data-loaded='false' style='padding-left:10px;' pid='" + ele.Id + "'>"+ele.catName+"</span>"
+                                        //"<span>"+ele.catName +"</span>" 
                                     )
                                 )
                         });

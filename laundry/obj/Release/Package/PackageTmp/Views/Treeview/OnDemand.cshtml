@@ -6,12 +6,12 @@
 
 <style>
     .itemlst{
-        width:200px;
-        height:500px;
+        width:27rem;
+        height:40rem;
         overflow-y:scroll;
     }
     .loadingP {
-        background-image: url('../../Content/Images/generated-image.gif');
+        /*background-image: url('../../Content/Images/generated-image.gif');*/
         width: 15px;
         display: inline-block;
     }
@@ -105,12 +105,12 @@
                         @foreach (var i in Model)
                         {
                             <li>
-                                <span class="itmcollapse collapsible" data-loaded="false" pid="@i.Id">&nbsp;</span>
+                                <span class="itmcollapse collapsible" data-loaded="false" pid="@i.Id" style="padding-left:10px;">@i.catName</span>
                                 @* Here I have added the above span for collapsible button for treeview *@
                                 @* and data-loaded="false" means its sub menu not loaded yet from database *@
-                                <span>
+                                @*<span>
                                     @i.catName
-                                </span>
+                                </span>*@
                             </li>
                         }
                     </ul>

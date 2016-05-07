@@ -9,11 +9,10 @@ using laundry.ViewModels;
 using laundry.Models.DB;
 using laundry.Security;
 using System.IO;
-using Microsoft.Reporting.WebForms;
 
 namespace laundry.Controllers
 {
-    [CustomAuthorize(Roles = "Admin")]
+    //[CustomAuthorize(Roles = "Admin")]
     public class BillsController : Controller
     {
         private LundryDbContext db = new LundryDbContext();
@@ -145,8 +144,10 @@ namespace laundry.Controllers
 
             });
 
-            return RedirectToAction("billReport", new { billno= SessionPersister.printBillNo });
-           
+            ViewBag.billno = SessionPersister.printBillNo;
+            return View("billReport");
+            // return RedirectToAction("billReport", new { billno= SessionPersister.printBillNo });
+
             //return RedirectToAction("printBill");
         }
 
@@ -254,12 +255,11 @@ namespace laundry.Controllers
             return View();
         }
 
-        public ActionResult billReport(string billno)
+        public PartialViewResult billReport(string billno)
         {
             ViewBag.billno = billno;
-            return View();
+            return PartialView();
         }
-    
 
     }
 }

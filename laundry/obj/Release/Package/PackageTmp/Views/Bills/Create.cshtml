@@ -10,11 +10,13 @@
     .tblResult {
         width: 600px;
     }
+
     #ulbtn {
         margin: 0;
         padding: 0;
         list-style: none;
     }
+
         #ulbtn li {
             padding-bottom: 10px;
         }
@@ -22,10 +24,12 @@
             #ulbtn li a {
                 width: 120px;
             }
+
     .form-horizontal .control-label {
         text-align: left;
         padding-left: 20px;
     }
+
     #custtel {
     }
 </style>
@@ -40,6 +44,7 @@
 @Html.Hidden("itmSId") // to store item Sub category
 <hr />
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<!----------------------------------- Customer Info ------------------------------------------>
 <div class="lnditem" style="background-color:#FFEEE4;">
     <div class="form-group">
         <div class="row">
@@ -105,15 +110,16 @@
         </div>
     </div>
 </div>
+<!----------------------------------- Bill Info ------------------------------------------>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @{Html.RenderAction("OnDemand", "Treeview");}
             </div>
         </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-8">
         <div class="row">
             <div class="col-md-6">
                 <div class="lnditem">
@@ -151,7 +157,7 @@
                     <div class="col-md-offset-2 col-md-10">
                         <ul id="ulbtn">
                             <li>
-                                <a href="@Url.Action("CreateNewBill", "Bills")" class="btn btn-default">Print New Bill</a>
+                                <a href="@Url.Action("CreateNewBill", "Bills")" class="btn btn-default" target="_blank">Print New Bill</a>
                             </li>
                             <li>
                                 <a href="#" class="btn btn-default">Send SMS</a>
@@ -173,6 +179,17 @@
         </div>
     </div>
 </div>
+
+<div id="bprn">
+
+</div>
+
+@Ajax.ActionLink("Open popup", "CreateNewBill", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "bprn", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })<br />
+
+<div id="result" style="display:none;"></div>
+
+
+
 @*}*@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -183,4 +200,20 @@
     </script>
     <script src="~/Scripts/addBill.js"></script>
     <script src="~/Scripts/Treeview.js"></script>
+
+    <!--this is for popup window-->
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#bprn").dialog({
+        autoOpen: false,
+        title: 'Title',
+        width: 500,
+        height: 'auto',
+        modal: true
+    });
+});
+function openPopup() {
+    $("#bprn").dialog("open");
+}
+</script>
 }

@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Content/site.css">
+    <link rel="stylesheet" href="/Content/report.css">
+    <link rel="stylesheet" href="/Content/font-awesome.css">
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="/Content/jquery ui/jquery-ui.css">
+</head>
+<body>
+    <div id="bprn">
+
+    </div>
+
+    @Ajax.ActionLink("Open popup", "testD", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "bprn", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })<br />
+
+    <div id="result" style="display:none;"></div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="/Scripts/respond.js"></script>
+    <script src="/Content/jquery ui/jquery-ui.js"></script>
+    <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript"></script>
+
+    <!--this is for popup window-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#bprn").dialog({
+                autoOpen: false,
+                title: 'Title',
+                width: 500,
+                height: 'auto',
+                modal: true
+            });
+        });
+        function openPopup() {
+            $("#bprn").dialog("open");
+        }
+    </script>
+</body>
+</html>

@@ -36,7 +36,7 @@ namespace laundry.Controllers
         {
             LundryDbContext db = new LundryDbContext();
             // this action for Get Sub Menus from database and return as json data
-            System.Threading.Thread.Sleep(1000);
+            //System.Threading.Thread.Sleep(1000);
             //List<Item> subMenus = new List<Item>();
             int pID = 0;
             int.TryParse(pid, out pID);

@@ -64,7 +64,7 @@ namespace laundry.Report
             //ReportViewer1.ZoomMode = ZoomMode.PageWidth 'for full width
             //report settings
             ReportViewer1.Width = 350;
-            ReportViewer1.Height = 600;
+            ReportViewer1.Height = 750;
             //clear the reportviewer datasource
             ReportViewer1.LocalReport.DataSources.Clear();
 
@@ -100,7 +100,7 @@ namespace laundry.Report
                 + "Items.itemImg,"
                 + "Items.Price,"
                 + "ItemMainCategories.catName "
-                + "from Bills INNER JOIN Customers ON Bills.CustId = Customers.CustId INNER JOIN Items ON Bills.ItemId = Items.ItemId INNER JOIN  ItemMainCategories ON Items.MId = ItemMainCategories.Id where Bills.printedBill='" + billno + "' and catName='Normal Wash'";
+                + "from Bills INNER JOIN Customers ON Bills.CustId = Customers.CustId INNER JOIN Items ON Bills.ItemId = Items.ItemId INNER JOIN  ItemMainCategories ON Items.MId = ItemMainCategories.Id where Bills.printedBill='" + billno + "'";
             //+ "FROM Bills INNER JOIN Items ON Bills.ItemId = Items.ItemId INNER JOIN Customers ON Bills.CustId = Customers.CustId where Bills.printedBill='"+billno +"'";
             //+ "INNER JOIN Customers ON Bills.CustId = Customers.CustId "
             //+ "INNER JOIN Items ON Bills.ItemId = Items.ItemId "
